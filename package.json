@@ -1,0 +1,13 @@
+{
+  "name": "xcast-player",
+  "version": "1.0.0",
+  "description": "WMP-style music player served from your PC on port 16610",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "music-metadata": "^12.0.0"
+  }
+}

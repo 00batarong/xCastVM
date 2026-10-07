@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xCast Player - Login</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: grid; place-items: center; color: #e8f1ff;
+    font: 15px "Segoe UI", Tahoma, sans-serif;
+    background: radial-gradient(ellipse at 50% 0%, #11305c 0%, #061224 60%, #02060f 100%);
+  }
+  .box {
+    width: min(340px, 90vw); padding: 28px 24px; border-radius: 8px; text-align: center;
+    background: linear-gradient(#17407a, #0a2147); border: 1px solid #4d8fdc; box-shadow: 0 0 30px rgba(91,192,255,.35);
+  }
+  h1 { margin: 0 0 18px; font-size: 24px; text-shadow: 0 0 10px #5bc0ff; }
+  input, button { width: 100%; padding: 11px 12px; border-radius: 6px; font: inherit; }
+  input { border: 1px solid #4d7fc0; background: rgba(0,10,30,.6); color: #fff; margin-bottom: 12px; }
+  button {
+    border: 2px solid #b8ffc6; color: #06300f; font-weight: 700; cursor: pointer;
+    background: radial-gradient(circle at 35% 28%, #c8ffd2, #36d65a 55%, #0b7a2b);
+  }
+  #msg { min-height: 20px; margin-top: 10px; color: #ff9a9a; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>xCast Player</h1>
+  <input id="pw" type="password" placeholder="Password" autofocus>
+  <button id="go">Sign in</button>
+  <div id="msg"></div>
+</div>
+<script>
+  const pw = document.getElementById('pw'), msg = document.getElementById('msg');
+  async function login() {
+    msg.textContent = '';
+    try {
+      const r = await fetch('/login', { method: 'POST', body: JSON.stringify({ password: pw.value }) });
+      if (r.ok) { location.href = '/'; return; }
+      msg.textContent = r.status === 429 ? 'Too many attempts. Wait a minute.' : 'Wrong password.';
+    } catch (e) { msg.textContent = 'Could not reach the server.'; }
+  }
+  document.getElementById('go').onclick = login;
+  pw.addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+</script>
+</body>
+</html>

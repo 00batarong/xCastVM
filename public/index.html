@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xCast Player</title>
+<script>try { document.documentElement.dataset.theme = localStorage.getItem('xcast-theme') || 'blue'; } catch (e) {}</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <button id="paneBtn" class="plain" aria-label="Toggle library pane">&#9776;</button>
+  <div class="logo">xCast</div>
+  <nav class="tabs">
+    <button data-view="library" class="active">Library</button>
+    <button data-view="now">Now Playing</button>
+  </nav>
+  <button id="rescan" class="plain small">Rescan</button>
+  <input id="search" type="search" placeholder="Search">
+</header>
+
+<main>
+  <aside id="pane">
+    <ul id="tree"></ul>
+    <div class="themebox">
+      <label for="theme">Theme</label>
+      <select id="theme">
+        <option value="blue">Classic Blue</option>
+        <option value="midnight">Midnight</option>
+        <option value="green">Neon Green</option>
+        <option value="purple">Purple Haze</option>
+        <option value="sunset">Sunset</option>
+        <option value="light">Light</option>
+      </select>
+    </div>
+  </aside>
+
+  <section id="libraryView">
+    <div id="crumb" class="crumb"></div>
+    <div class="tablewrap">
+      <table id="list">
+        <thead><tr><th class="num">#</th><th>Title</th><th>Artist</th><th>Album</th><th class="len">Length</th><th class="ext">Type</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <p id="empty" class="empty" hidden></p>
+    </div>
+  </section>
+
+  <section id="nowView" hidden>
+    <canvas id="viz"></canvas>
+    <div class="np"><img id="cover" alt="" hidden><h2 id="npTitle">Nothing playing</h2><p id="npArtist"></p><p id="npAlbum"></p></div>
+  </section>
+</main>
+
+<footer class="bar">
+  <div class="seekrow">
+    <span id="tCur">0:00</span>
+    <input id="seek" type="range" min="0" max="1000" value="0">
+    <span id="tDur">0:00</span>
+  </div>
+  <div class="ctrlrow">
+    <div class="mini"><div id="miniTitle">xCast Player</div><div id="miniArtist"></div></div>
+    <div class="ctrls">
+      <button id="bShuffle" class="round" aria-label="Shuffle"><svg viewBox="0 0 24 24"><path d="M3 7h4l10 10h4M3 17h4l3-3M14 10l3-3h4M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button id="bStop" class="round" aria-label="Stop"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M6 6h12v12H6z"/></svg></button>
+      <button id="bPrev" class="round" aria-label="Previous"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button>
+      <button id="bPlay" class="play" aria-label="Play/Pause">
+        <svg class="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 4l13 8-13 8z"/></svg>
+        <svg class="i-pause" viewBox="0 0 24 24"><path fill="currentColor" d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+      </button>
+      <button id="bNext" class="round" aria-label="Next"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M16 5h2v14h-2zM4 5l11 7L4 19z"/></svg></button>
+      <button id="bRepeat" class="round" aria-label="Repeat"><svg viewBox="0 0 24 24"><path d="M4 11V9a3 3 0 013-3h12M16 3l3 3-3 3M20 13v2a3 3 0 01-3 3H5M8 21l-3-3 3-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+    <div class="vol">
+      <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM16 9a4 4 0 010 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      <input id="vol" type="range" min="0" max="100" value="80">
+    </div>
+  </div>
+</footer>
+
+<audio id="audio" preload="metadata"></audio>
+<script src="app.js"></script>
+</body>
+</html>

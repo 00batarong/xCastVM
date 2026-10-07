@@ -1,0 +1,7 @@
+{
+  "password": "password",
+  "duckdns": {
+    "domain": "",
+    "token": ""
+  }
+}
